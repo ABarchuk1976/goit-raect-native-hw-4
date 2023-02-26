@@ -1,6 +1,8 @@
 import * as Font from 'expo-font';
-
-import { RegistrationScreen } from './src/screens/auth/RegistrationScreen/RegistrationScreen';
+import { RegistrationScreen } from './src/screens/auth/RegistrationScreen/RegistrationScreen.jsx';
+import { LoginScreen } from './src/screens/auth/LoginScreen/LoginScreen.jsx';
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
 
 const loadFonts = async () => {
   await Font.loadAsync({
@@ -18,7 +20,24 @@ export default function App() {
 
   //   );
   // }
-  // Choose screen for preview.
-  return <RegistrationScreen />;
+  const AuthStack = createStackNavigator();
+
+  return (
+    <NavigationContainer>
+      <AuthStack.Navigator>
+        <AuthStack.Screen
+          name="Login"
+          component={LoginScreen}
+          options={{ headerShown: false }}
+        />
+        <AuthStack.Screen
+          name="Registration"
+          component={RegistrationScreen}
+          options={{ headerShown: false }}
+        />
+      </AuthStack.Navigator>
+    </NavigationContainer>
+  );
+  // return <RegistrationScreen />;
   // return <LoginScreen />;
 }

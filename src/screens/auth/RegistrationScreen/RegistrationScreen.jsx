@@ -26,7 +26,7 @@ const INPUTS = {
   password: 'password',
 };
 
-export const RegistrationScreen = () => {
+export const RegistrationScreen = ({ navigation }) => {
   const [isShownKeyboard, setIsShownKeyboard] = useState(
     INITSTATE.isShownKeyboard
   );
@@ -188,7 +188,11 @@ export const RegistrationScreen = () => {
               >
                 <Text style={styles.btnTitle}>Register</Text>
               </TouchableOpacity>
-              <TouchableOpacity activeOpacity={0.8} style={styles.loginRef}>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                style={styles.loginRef}
+                onPress={() => navigation.navigate('Login')}
+              >
                 <Text style={styles.text}>Already have an account? Login</Text>
               </TouchableOpacity>
             </View>
