@@ -1,24 +1,22 @@
 import React from 'react';
 
 import { createStackNavigator } from '@react-navigation/stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import { RegistrationScreen } from '../../src/screens/auth/RegistrationScreen/RegistrationScreen.jsx';
-import { LoginScreen } from '../../src/screens/auth/LoginScreen/LoginScreen.jsx';
-import { PostsScreen } from '../../src/screens/posts/PostsScreen.jsx';
-import { CreatePostScreen } from '../../src/screens/posts/CreatePostScreen.jsx';
-import { ProfileScreen } from '../../src/screens/posts/ProfileScreen.jsx';
+import { RegistrationScreen } from '../screens/auth/RegistrationScreen.jsx';
+import { LoginScreen } from '../screens/auth/LoginScreen.jsx';
+
+import { HomeScreen } from '../screens/posts/HomeScreen';
 
 const AuthStack = createStackNavigator();
-const PostsTab = createBottomTabNavigator();
 
 export const authResult = (isAuth) => {
   return isAuth ? (
-    <PostsTab.Navigator>
-      <PostsTab.Screen name="Posts" component={PostsScreen} />
-      <PostsTab.Screen name="CreatePost" component={CreatePostScreen} />
-      <PostsTab.Screen name="Profile" component={ProfileScreen} />
-    </PostsTab.Navigator>
+    // <PostsTab.Navigator>
+    //   <PostsTab.Screen name="Posts" component={PostsScreen} />
+    //   <PostsTab.Screen name="CreatePost" component={CreatePostScreen} />
+    //   <PostsTab.Screen name="Profile" component={ProfileScreen} />
+    // </PostsTab.Navigator>
+    <HomeScreen />
   ) : (
     <AuthStack.Navigator>
       <AuthStack.Screen

@@ -13,7 +13,6 @@ import {
 import React, { useState } from 'react';
 
 const INITSTATE = {
-  login: '',
   email: '',
   password: '',
   isShownKeyboard: false,
@@ -21,40 +20,35 @@ const INITSTATE = {
 };
 
 const INPUTS = {
-  login: 'login',
   email: 'email',
   password: 'password',
 };
 
-export const RegistrationScreen = ({ navigation }) => {
+export const LoginScreen = ({ navigation }) => {
   const [isShownKeyboard, setIsShownKeyboard] = useState(
     INITSTATE.isShownKeyboard
   );
   const [activeInput, setActiveInput] = useState(null);
-
   const [isShownPassword, setIsShownPassword] = useState(
     INITSTATE.isShownPassword
   );
 
-  const [login, setLogin] = useState(INITSTATE.login);
   const [email, setEmail] = useState(INITSTATE.email);
   const [password, setPassword] = useState(INITSTATE.password);
 
   const hideKeyboard = () => {
     setIsShownKeyboard(false);
     Keyboard.dismiss();
-    setActiveInput(null);
   };
 
   const resetForm = () => {
-    setLogin(INITSTATE.login);
     setEmail(INITSTATE.email);
     setPassword(INITSTATE.password);
   };
 
   const handleSubmit = () => {
     hideKeyboard();
-    console.log('Login: ', login, ', Email: ', email, ', Password: ', password);
+    console.log('Email: ', email, ', Password: ', password);
     resetForm();
   };
 
@@ -63,10 +57,10 @@ export const RegistrationScreen = ({ navigation }) => {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={hideKeyboard}>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <ImageBackground
         style={styles.bgImage}
-        source={require('../../../../assets/images/main-background.jpeg')}
+        source={require('../../../assets/images/main-background.jpeg')}
       >
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -75,17 +69,10 @@ export const RegistrationScreen = ({ navigation }) => {
           <View
             style={{
               ...styles.container,
-              paddingBottom: isShownKeyboard ? 194 : 78,
+              paddingBottom: isShownKeyboard ? 194 : 144,
             }}
           >
-            <View style={styles.imgThumb}>
-              {/* <Image /> */}
-              <ImageBackground
-                style={styles.addBtn}
-                source={require('../../../../assets/images/add.png')}
-              ></ImageBackground>
-            </View>
-            <Text style={styles.formTitle}>Registration</Text>
+            <Text style={styles.formTitle}>Login</Text>
 
             <View style={styles.form}>
               <View style={styles.inputsWrapper}>
@@ -93,33 +80,6 @@ export const RegistrationScreen = ({ navigation }) => {
                   style={{
                     ...styles.input,
                     marginTop: 33,
-                    backgroundColor:
-                      activeInput === INPUTS.login ? '#ffffff' : '#f6f6f6',
-                    borderColor:
-                      activeInput === INPUTS.login ? '#ff6c00' : '#e8e8e8',
-                  }}
-                  inputMode="text"
-                  value={login}
-                  placeholder="Login..."
-                  placeholderTextColor="#bdbdbd"
-                  require
-                  autoFocus={true}
-                  textAlign="left"
-                  autoCapitalize="none"
-                  onChangeText={setLogin}
-                  onFocus={() => {
-                    setIsShownKeyboard(true);
-                    setActiveInput(INPUTS.login);
-                  }}
-                  onBlur={() => {
-                    setIsShownKeyboard(false);
-                    setActiveInput(null);
-                  }}
-                />
-
-                <TextInput
-                  style={{
-                    ...styles.input,
                     backgroundColor:
                       activeInput === INPUTS.email ? '#ffffff' : '#f6f6f6',
                     borderColor:
@@ -130,6 +90,7 @@ export const RegistrationScreen = ({ navigation }) => {
                   placeholder="Email address..."
                   placeholderTextColor="#bdbdbd"
                   require
+                  autoFocus={true}
                   textAlign="left"
                   autoCapitalize="none"
                   onChangeText={setEmail}
@@ -186,14 +147,14 @@ export const RegistrationScreen = ({ navigation }) => {
                 style={styles.submitBtn}
                 onPress={handleSubmit}
               >
-                <Text style={styles.btnTitle}>Register</Text>
+                <Text style={styles.btnTitle}>Login</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 activeOpacity={0.8}
                 style={styles.loginRef}
-                onPress={() => navigation.navigate('Login')}
+                onPress={() => navigation.navigate('Registration')}
               >
-                <Text style={styles.text}>Already have an account? Login</Text>
+                <Text style={styles.text}>Don't have an account? Register</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -224,22 +185,6 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 25,
   },
 
-  imgThumb: {
-    position: 'relative',
-    marginTop: -60,
-    alignSelf: 'center',
-    width: 120,
-    height: 120,
-    borderRadius: 16,
-    backgroundColor: '#f6f6f6',
-  },
-  addBtn: {
-    position: 'absolute',
-    right: -12,
-    bottom: 14,
-    width: 25,
-    height: 25,
-  },
   formTitle: {
     textAlign: 'center',
     marginTop: 32,

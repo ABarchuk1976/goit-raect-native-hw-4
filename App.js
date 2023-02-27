@@ -21,5 +21,5 @@ export default function App() {
   //   );
   // }
 
-  return <NavigationContainer>{authResult(null)}</NavigationContainer>;
+  return <NavigationContainer>{authResult({})}</NavigationContainer>;
 }
