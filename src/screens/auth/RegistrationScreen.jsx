@@ -28,7 +28,7 @@ const INPUTS = {
 };
 
 export const RegistrationScreen = ({ navigation }) => {
-  const { setIsAuth } = useContext(AuthContext);
+  const setIsAuth = useContext(AuthContext);
 
   const [isShownKeyboard, setIsShownKeyboard] = useState(
     INITSTATE.isShownKeyboard

@@ -1,23 +1,22 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { AntDesign } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 
-import { AuthContext } from '../../services/context';
-
 import { PostsScreen } from './PostsScreen';
 import { CreatePostScreen } from './CreatePostScreen.jsx';
 import { ProfileScreen } from './ProfileScreen.jsx';
-import { useContext } from '../../services/context.js';
+import { AuthContext } from '../../services/context';
 
 const PostsTab = createBottomTabNavigator();
 
 export const HomeScreen = () => {
-  const { isAuth, setIsAuth } = useContext(AuthContext);
-
-  console.log(isAuth);
+  const setIsAuth = useContext(AuthContext);
+  const handlerLogOut = () => {
+    setIsAuth(false);
+  };
 
   return (
     <PostsTab.Navigator initialRouteName="Posts">
@@ -32,7 +31,7 @@ export const HomeScreen = () => {
             backgroundColor: '#ffffff',
           },
           headerTitleStyle: {
-            fontFamily: 'roboto_regular',
+            fontFamily: 'roboto-regular',
             fontWeight: '500',
             fontSize: 17,
           },
@@ -61,7 +60,7 @@ export const HomeScreen = () => {
       <PostsTab.Screen
         name="CreatePost"
         component={CreatePostScreen}
-        options={{
+        options={({ navigation }) => ({
           title: 'Create post',
           headerTitleAlign: 'center',
           headerStyle: {
@@ -69,7 +68,7 @@ export const HomeScreen = () => {
             backgroundColor: '#ffffff',
           },
           headerTitleStyle: {
-            fontFamily: 'roboto_regular',
+            fontFamily: 'roboto-regular',
             fontWeight: '500',
             fontSize: 17,
           },
@@ -95,7 +94,7 @@ export const HomeScreen = () => {
               }}
             />
           ),
-        }}
+        })}
       />
       <PostsTab.Screen
         name="Profile"
@@ -108,7 +107,7 @@ export const HomeScreen = () => {
             backgroundColor: '#ffffff',
           },
           headerTitleStyle: {
-            fontFamily: 'roboto_regular',
+            fontFamily: 'roboto-regular',
             fontWeight: '500',
             fontSize: 17,
           },

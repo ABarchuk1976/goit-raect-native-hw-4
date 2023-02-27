@@ -45,7 +45,7 @@ export default function App() {
   }
 
   return (
-    <AuthContext.Provider value={{ isAuth, setIsAuth }}>
+    <AuthContext.Provider value={setIsAuth}>
       <NavigationContainer>
         <View style={styles.container} onLayout={onLayoutRootView}>
           {routing}

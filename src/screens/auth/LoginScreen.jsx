@@ -27,7 +27,9 @@ const INPUTS = {
 };
 
 export const LoginScreen = ({ navigation }) => {
-  const { setIsAuth } = useContext(AuthContext);
+  const setIsAuth = useContext(AuthContext);
+
+  console.log('Function ', setIsAuth);
 
   const [isShownKeyboard, setIsShownKeyboard] = useState(
     INITSTATE.isShownKeyboard
