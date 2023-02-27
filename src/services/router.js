@@ -11,11 +11,6 @@ const AuthStack = createStackNavigator();
 
 export const authResult = (isAuth) => {
   return isAuth ? (
-    // <PostsTab.Navigator>
-    //   <PostsTab.Screen name="Posts" component={PostsScreen} />
-    //   <PostsTab.Screen name="CreatePost" component={CreatePostScreen} />
-    //   <PostsTab.Screen name="Profile" component={ProfileScreen} />
-    // </PostsTab.Navigator>
     <HomeScreen />
   ) : (
     <AuthStack.Navigator>

@@ -5,19 +5,37 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { AntDesign } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 
+import { AuthContext } from '../../services/context';
+
 import { PostsScreen } from './PostsScreen';
 import { CreatePostScreen } from './CreatePostScreen.jsx';
 import { ProfileScreen } from './ProfileScreen.jsx';
+import { useContext } from '../../services/context.js';
 
 const PostsTab = createBottomTabNavigator();
 
-export const HomeScreen = ({ navigation }) => {
+export const HomeScreen = () => {
+  const { isAuth, setIsAuth } = useContext(AuthContext);
+
+  console.log(isAuth);
+
   return (
     <PostsTab.Navigator initialRouteName="Posts">
       <PostsTab.Screen
         name="Posts"
         component={PostsScreen}
         options={{
+          title: 'Posts',
+          headerTitleAlign: 'center',
+          headerStyle: {
+            height: 88,
+            backgroundColor: '#ffffff',
+          },
+          headerTitleStyle: {
+            fontFamily: 'roboto_regular',
+            fontWeight: '500',
+            fontSize: 17,
+          },
           tabBarShowLabel: false,
           tabBarIcon: ({ focused, size, color }) => {
             return (
@@ -35,6 +53,7 @@ export const HomeScreen = ({ navigation }) => {
               size={24}
               color="#bdbdbd"
               style={{ marginRight: 10 }}
+              onPress={() => setIsAuth(false)}
             />
           ),
         }}
@@ -43,6 +62,17 @@ export const HomeScreen = ({ navigation }) => {
         name="CreatePost"
         component={CreatePostScreen}
         options={{
+          title: 'Create post',
+          headerTitleAlign: 'center',
+          headerStyle: {
+            height: 88,
+            backgroundColor: '#ffffff',
+          },
+          headerTitleStyle: {
+            fontFamily: 'roboto_regular',
+            fontWeight: '500',
+            fontSize: 17,
+          },
           tabBarShowLabel: false,
           tabBarIcon: ({ focused, size, color }) => {
             return <AntDesign name="plus" size={13} color="#ffffff" />;
@@ -60,11 +90,41 @@ export const HomeScreen = ({ navigation }) => {
               size={24}
               color="#bdbdbd"
               style={{ marginLeft: 16 }}
+              onPress={() => {
+                navigation.goBack();
+              }}
             />
           ),
         }}
       />
-      <PostsTab.Screen name="Profile" component={ProfileScreen} />
+      <PostsTab.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{
+          title: 'Profile',
+          headerTitleAlign: 'center',
+          headerStyle: {
+            height: 88,
+            backgroundColor: '#ffffff',
+          },
+          headerTitleStyle: {
+            fontFamily: 'roboto_regular',
+            fontWeight: '500',
+            fontSize: 17,
+          },
+          tabBarShowLabel: false,
+          tabBarIcon: ({ focused, size, color }) => {
+            return (
+              <Feather
+                name="user"
+                size={24}
+                color="#212121"
+                style={{ marginTop: 9 }}
+              />
+            );
+          },
+        }}
+      />
     </PostsTab.Navigator>
   );
 };

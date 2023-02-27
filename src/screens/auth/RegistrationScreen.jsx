@@ -10,7 +10,8 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { AuthContext } from '../../services/context';
 
 const INITSTATE = {
   login: '',
@@ -27,6 +28,8 @@ const INPUTS = {
 };
 
 export const RegistrationScreen = ({ navigation }) => {
+  const { setIsAuth } = useContext(AuthContext);
+
   const [isShownKeyboard, setIsShownKeyboard] = useState(
     INITSTATE.isShownKeyboard
   );
@@ -54,8 +57,8 @@ export const RegistrationScreen = ({ navigation }) => {
 
   const handleSubmit = () => {
     hideKeyboard();
-    console.log('Login: ', login, ', Email: ', email, ', Password: ', password);
     resetForm();
+    setIsAuth(true);
   };
 
   const togglePassword = () => {
