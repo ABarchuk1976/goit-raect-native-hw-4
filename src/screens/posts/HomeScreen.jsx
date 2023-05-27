@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { AntDesign } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
 
-import { PostsScreen } from './PostsScreen';
+import { PostsScreen } from './PostsScreen.jsx';
 import { CreatePostScreen } from './CreatePostScreen.jsx';
 import { ProfileScreen } from './ProfileScreen.jsx';
 import { AuthContext } from '../../services/context';

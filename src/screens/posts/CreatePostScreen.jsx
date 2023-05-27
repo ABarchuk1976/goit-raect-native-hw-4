@@ -20,12 +20,19 @@ const initialPost = {
   location: null,
 };
 
-export const CreatePostScreen = () => {
+export const CreatePostScreen = ({ navigation }) => {
   const [post, setPost] = useState(initialPost);
   const [camera, setCamera] = useState(null);
   const [isKeyboardShown, setIsKeyboardShown] = useState(false);
 
   useEffect(() => {
+    //(async () => {
+    //let { status } = await Location.requestPermissionsAsync();
+    //if (status !== 'granted') {
+    // console.log('Permission to access location was denied');
+    //}
+    //})();
+
     const handleKeyboardShown = Keyboard.addListener('keyboardDidShow', () => {
       setIsKeyboardShown(true);
     });
@@ -49,12 +56,10 @@ export const CreatePostScreen = () => {
     try {
       const uriData = await camera.takePictureAsync();
       const uri = uriData.uri;
-      //const locationData = await Location.getCurrentPositionAsync();
-      //const location = locationData.coords;
+      const locationData = await Location.getCurrentPositionAsync();
+      const location = locationData.coords;
 
-      console.log('URI: ', uri);
-
-      setPost((prevState) => ({ ...prevState, uri }));
+      setPost((prevState) => ({ ...prevState, uri, location }));
     } catch (error) {
       console.log(error.message);
     }
@@ -64,12 +69,19 @@ export const CreatePostScreen = () => {
     setPost((prevState) => ({ ...prevState, [type]: value }));
   };
 
+  const sendPost = () => {
+    setPost(initialPost);
+    navigation.navigate('Posts', { post });
+  };
+
+  const { uri, title, area } = post;
+
   return (
     <TouchableWithoutFeedback onPress={handleHideKeyboard}>
       <View style={styles.container}>
-        {post.uri ? (
+        {uri ? (
           <View>
-            <Image source={{ uri: post.uri }} style={styles.photo} />
+            <Image source={{ uri }} style={styles.photo} />
           </View>
         ) : (
           <Camera style={styles.camera} ref={setCamera}>
@@ -81,48 +93,49 @@ export const CreatePostScreen = () => {
             </TouchableOpacity>
           </Camera>
         )}
+        <Text style={styles.text}>Upload photo</Text>
         <View style={styles.inputContainer}>
           <TextInput
             style={{ ...styles.input, marginBottom: 16 }}
-            placeholder="Назва..."
+            placeholder="Title..."
             onFocus={() => setIsKeyboardShown(true)}
-            value={post.title}
+            value={title}
             onChangeText={(value) => handleChangeInput('title', value)}
           />
           <TextInput
             style={{ ...styles.input, paddingLeft: 28 }}
-            placeholder="Місцевість..."
+            placeholder="Location..."
             onFocus={() => setIsKeyboardShown(true)}
-            value={post.area}
+            value={area}
             onChangeText={(value) => handleChangeInput('area', value)}
           />
           <EvilIcons
             style={{
               position: 'absolute',
               top: 70,
-              left: 16,
+              left: 0,
               color: '#cecdcd',
             }}
             name="location"
-            size={24}
+            size={30}
             color="black"
           />
         </View>
         <TouchableOpacity
-          onPress={() => console.log('Press')}
-          disabled={!post.uri}
+          onPress={sendPost}
+          disabled={!uri}
           style={{
             ...styles.sendBtn,
-            backgroundColor: post.uri ? '#ff6c00' : '#f6f6f6',
+            backgroundColor: uri ? '#ff6c00' : '#f6f6f6',
           }}
         >
           <Text
             style={{
               ...styles.btnTitle,
-              color: post.uri ? '#ffffff' : '#bdbdbd',
+              color: uri ? '#ffffff' : '#bdbdbd',
             }}
           >
-            Опубліковати
+            Publish
           </Text>
         </TouchableOpacity>
         <View style={styles.removeContainer}>
@@ -142,7 +155,7 @@ export const CreatePostScreen = () => {
                 color: post.uri ? '#ffffff' : '#bdbdbd',
               }}
               name="delete"
-              size={24}
+              size={22}
             />
           </TouchableOpacity>
         </View>
@@ -154,6 +167,7 @@ export const CreatePostScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'column',
     backgroundColor: '#ffffff',
     paddingHorizontal: 16,
   },
@@ -163,6 +177,11 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  text: {
+    fontSize: 16,
+    color: '#bdbdbd',
+    marginTop: 8,
   },
   photo: {
     height: 240,
@@ -187,7 +206,6 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 45,
-    marginHorizontal: 16,
     borderBottomWidth: 1,
     borderBottomColor: '#e8e8e8',
     fontFamily: 'roboto-regular',
@@ -209,17 +227,18 @@ const styles = StyleSheet.create({
   },
   removeContainer: {
     display: 'flex',
-    // justifyContent: "flex-end",
     alignItems: 'center',
     marginTop: 80,
   },
   removeBtn: {
     display: 'flex',
     width: 70,
-    height: 70,
+    height: 40,
     backgroundColor: '#f6f6f6',
     borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop: 'auto',
+    marginBottom: 22,
   },
 });
